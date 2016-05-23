@@ -1,10 +1,311 @@
-<!DOCTYPE html>
 <html>
-<head>
-<meta charset="ISO-8859-1">
-<title>Lo Encontre</title>
-</head>
 <body>
-<input>
+<head>
+<meta charset="utf-8">
+<meta name="description" content="BlackTie Free Bootstrap Theme">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+
+
+<title>Lo Encontre!</title>
+<link rel=stylesheet href="css/main.css">
+<script src="js/vendor/modernizr.js"></script>
+<script src="js/vendor/respond.min.js"></script>
+
+</head>
+<div class="level level-hero hero-home has-hint">
+
+
+	<div class="hero-overlay visible-lg"></div>
+
+	<video loop id="bg-video_" class="fullscreen-video">
+		<source src="" type="video/mp4">
+	</video>
+	<script>
+		document.getElementById('bg-video_').src = 'video/background'
+				+ (Math.floor((Math.random() * 3) + 1)) + '.mp4';
+		document.getElementById('bg-video_').play();
+	</script>
+	<div class="container full-height">
+		<div class=v-align-parent>
+			<div class=v-center>
+				<div class="row">
+					<div class="col-xs-10 col-sm-6">
+						<h1 class="mb-10 heading">
+							lo<span>Encontraste?</span>
+						</h1>
+						<div class="subheading mb-20">
+							<br> Ahora encontrar tus documentos es muy facil.
+						</div>
+					</div>
+				</div>
+				<br>
+				<div class="col-sm-10 ">
+					<button type="button" class="btn btn-default btn-lg"
+						onclick="document.getElementsByClassName('hint-arrow')[0].click();">
+						<span class="glyphicon glyphicon-qrcode" aria-hidden="true"></span>
+						Escanea el codigo QR
+					</button>
+					<button type="button" class="btn btn-default btn-lg">
+						<span class="glyphicon glyphicon-qrcode" aria-hidden="true"></span>
+						Registra tu Documento
+					</button>
+				</div>
+			</div>
+		</div>
+
+		<div class="hint-arrow"></div>
+	</div>
+</div>
+<div class=level>
+
+	<div class="container mb-100 xs-mb-40">
+		<div class=row>
+			<div class="col-sm-5 col-md-4 col-md-offset-2 col-sm-offset-1">
+				<h1 class="mb-10 xs-mb-10 heading color-dark heading-bordered">Escanealo!</h1>
+			</div>
+			<div class="col-sm-5 col-sm-offset-1">
+				<p class="xs-mw">Si Encontraste algun documento que tenga un
+					codigo QR, escanealo! y así encontraras al dueño.
+			</div>
+		</div>
+	</div>
+	<br />
+	<div class="row">
+		<div class="col-lg-5 col-lg-offset-4 col-sm-5 col-sm-offset-4 col-md-5 col-md-offset-4">
+
+				<canvas id="can"></canvas>
+				<div id="overlay"></div>
+
+			<style>
+#can {
+	width:90%;
+	-webkit-box-shadow: 0px 0px 46px 0px rgba(0, 0, 0, 0.75);
+	-moz-box-shadow: 0px 0px 46px 0px rgba(0, 0, 0, 0.75);
+	box-shadow: 0px 0px 46px 0px rgba(0, 0, 0, 0.75);
+}
+
+#overlay {
+	width: 85%;
+	position: absolute;
+	left: 15px;
+	top: 50px;
+	background: #35FF10;
+	color: # #eeeeee;
+	font-family: Droid Sans, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	cursor: pointer;
+	-webkit-box-shadow: rgba(0, 0, 0, 0.5) 5px 5px 20px;
+	-moz-box-shadow: rgba(0, 0, 0, 0.5) 5px 5px 20px;
+	box-shadow: rgba(0, 0, 0, 0.5) 5px 5px 20px;
+	height: 2px;
+}
+
+
+</style>
+			<img width="100" id="resultado">
+		</div>
+	</div>
+	<div id="ii">
+		<script type="text/javascript" src="js/qrcodelib.js"></script>
+		<script type="text/javascript" src="js/webcodecamjs.js"></script>
+		<script type="text/javascript">
+			var txt = "innerText" in HTMLElement.prototype ? "innerText"
+					: "textContent";
+			var arg = {
+				resultFunction : function(result) {
+					document.getElementById('resultado').src = result.imgData;
+					document.getElementById('ii').innerHTML = result.code;
+				}
+			};
+			Notification.requestPermission(function(status) {
+				if (status == "granted") {
+					new WebCodeCamJS("canvas").init(arg).play();
+				}
+			});
+			function animate(param) {
+				if (param == true) {
+					$("#overlay").animate({
+						top : '360px'
+					}, 3000);
+					setTimeout(animate(false), 1000)
+				} else {
+					$("#overlay").animate({
+						top : '10px'
+					}, 3000);
+					setTimeout(animate(true), 1000)
+				}
+			}
+		</script>
+	</div>
+
+	<br /> <br /> <br /> <br />
+	<div class=container>
+		<div class="row mb-90 xs-mb-0">
+
+			<div class="col-sm-1 col-sm-offset-2">
+				<i class="icon icon-check"></i>
+			</div>
+			<div class="col-sm-3">
+				<h3 class="mb-15">iOS Ready</h3>
+				<p class="smaller xs-mb-40 xs-mw">Lorem Ipsum has been the
+					industry's standard dummy text ever since the 1500s.
+			</div>
+
+			<div class="col-sm-1">
+				<i class="icon icon-calendar"></i>
+			</div>
+			<div class="col-sm-3">
+				<h3 class="mb-15">Up To Date</h3>
+				<p class="smaller xs-mb-40 xs-mw">Lorem Ipsum has been the
+					industry's standard dummy text ever since the 1500s.
+			</div>
+
+		</div>
+
+		<div class=row>
+
+			<div class="col-sm-1 col-sm-offset-2">
+				<i class="icon icon-user"></i>
+			</div>
+			<div class="col-sm-3">
+				<h3 class="mb-15">Multiple Users</h3>
+				<p class="smaller xs-mb-40 xs-mw">Lorem Ipsum has been the
+					industry's standard dummy text ever since the 1500s.
+			</div>
+
+			<div class="col-sm-1">
+				<i class="icon icon-clock"></i>
+			</div>
+			<div class="col-sm-3">
+				<h3 class="mb-15">On Time</h3>
+				<p class="smaller xs-mb-40 xs-mw">Lorem Ipsum has been the
+					industry's standard dummy text ever since the 1500s.
+			</div>
+
+		</div>
+	</div>
+</div>
+
+<div class="level level-img-right">
+
+	<div class="container xs-mb-30">
+		<img class=img-right-sprite src="img/v2/iphone-bg-lg.min.png" alt>
+		<div class="row mb-60 xs-mb-20">
+			<div class="col-sm-6 col-lg-offset-1 col-lg-5">
+				<h1
+					class="mb-20 xs-mb-10 heading color-dark heading-bordered xl-heading-outdent">Details</h1>
+				<h2 class="w-300 color-dark mb-10">All what you want in your
+					phone</h2>
+				<p class=xs-mw>Now with Appi you have it on your fingertips.
+			</div>
+		</div>
+
+		<div class="visible-xs xs-mw xs-mb-40">
+			<!-- 			<img src="img/v2/iphone-mobile.min.png" alt> -->
+		</div>
+
+		<div class="row mb-60 xs-mb-20">
+			<div class="col-sm-1 col-lg-offset-1">
+				<i class="icon icon-globe"></i>
+			</div>
+			<div class="col-sm-4 col-md-3">
+				<h3 class="mb-15">Worldwide</h3>
+				<p class="smaller xs-mw">Lorem Ipsum has been the industry's
+					standard dummy text ever since the 1500s.
+			</div>
+		</div>
+
+		<div class="row mb-60 xs-mb-20">
+			<div class="col-sm-1 col-lg-offset-1">
+				<i class="icon icon-eye"></i>
+			</div>
+			<div class="col-sm-4 col-md-3">
+				<h3 class="mb-15">Privacy</h3>
+				<p class="smaller xs-mw">Lorem Ipsum has been the industry's
+					standard dummy text ever since the 1500s.
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-1 col-lg-offset-1">
+				<i class="icon icon-bubble"></i>
+			</div>
+			<div class="col-sm-4 col-md-3">
+				<h3 class="mb-15">Social Integration</h3>
+				<p class="smaller xs-mw">Lorem Ipsum has been the industry's
+					standard dummy text ever since the 1500s.
+			</div>
+		</div>
+	</div>
+
+</div>
+
+<div class="level level-outro text-center">
+	<div class=container>
+
+		<form class=contact method=get action="/" accept-charset="UTF-8">
+
+			<div class="h2 mb-20">
+				Available on the <br class=visible-xs-block> App Store
+			</div>
+			<p class="mb-35">Enter your phone number and we’ll send a link to
+				your iPhone
+			<div class="btn-append dropdown-prepend">
+
+				<div class=dropdown>
+					<button class="btn btn-default dropdown-toggle" type="button"
+						id="f1" data-toggle="dropdown" aria-expanded="true">
+						<span id=option-value-f1>US (+1)</span> <span class="caret"></span>
+					</button>
+					<ul class="dropdown-menu" data-displaytarget="#option-value-f1"
+						data-inputtarget=".f1-target" role="menu" aria-labelledby="f1">
+						<li role="presentation" data-placeholder="US ( +1)" data-value="1"
+							class=disabled>US ( +1)</li>
+					</ul>
+				</div>
+
+				<!-- actual select here -->
+				<select name="country-code" class="sr-only f1-target countryCode">
+					<option selected value="1">US (+1)</option>
+				</select> <input type=tel class="text phoneNumber" name="tel"
+					placeholder="Phone number" required> <input type=submit
+					class="submit appended" value=submit>
+
+			</div>
+
+		</form>
+	</div>
+
+
+</div>
+<div class="footer text-center">
+	<p class="fmenu">
+		<a href="index.html">HOME</a> | <a href="about.html">ABOUT</a>
+	</p>
+
+</div>
+
+
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.3/jquery.min.js"
+	type="text/javascript">
+	
+</script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"
+	type="text/javascript">
+	
+</script>
+
+<script src="js/bootstrap.min.js"></script>
+<script src="js/dropdown.js"></script>
+<script src="js/main.js"></script>
+<!-- //-end- concat_js -->
+<script>
+animate(false);
+</script>
+
 </body>
+
 </html>
