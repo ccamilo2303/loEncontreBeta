@@ -1,4 +1,4 @@
-package com.loEncontre.config;
+package com.loEncontre.Config;
 
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;

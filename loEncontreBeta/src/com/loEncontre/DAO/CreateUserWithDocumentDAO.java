@@ -1,6 +1,6 @@
 package com.loEncontre.DAO;
 
-import com.loEncontre.config.MongoSingletonConnection;
+import com.loEncontre.Config.MongoSingletonConnection;
 
 /**
  * 
@@ -36,7 +36,8 @@ public class CreateUserWithDocumentDAO {
 		return instancia_;
 	}
 	
-	public String createUserAndVerifyDocument(String token){
+	public String createUserAndVerifyDocument(String token, String correo){
+		
 		return"";
 	}
 
