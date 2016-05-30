@@ -1,9 +1,7 @@
 package com.loEncontre.ControladorJWT;
 
-import java.security.Key;
 import java.security.NoSuchAlgorithmException;
 
-import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
@@ -17,14 +15,14 @@ import com.mongodb.client.MongoDatabase;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.impl.crypto.MacProvider;
+import io.jsonwebtoken.SignatureException;
 
 /**
  * @author crick
  * 28/05/2016
  */
 public class ControllerJWT {
-	
+
 	/**
 	 * Variable que llama la instancia de la conexion
 	 */
@@ -34,12 +32,12 @@ public class ControllerJWT {
 	 * Variable de instancia
 	 */
 	private static ControllerJWT instance_ = null;
-	
+
 	/**
 	 * Contructor privado
 	 */
 	private ControllerJWT(){}
-	
+
 	/**
 	 * 
 	 * @return instancia de this
@@ -50,7 +48,7 @@ public class ControllerJWT {
 		}
 		return instance_;
 	}
-	
+
 	/**
 	 * Metodo que retorna el JWT con el que se arma el codigo QR
 	 * @param ID
@@ -61,17 +59,24 @@ public class ControllerJWT {
 		SecretKey secretKey = new SecretKeySpec(getKey().getBytes(), "AES");
 		return Jwts.builder().setId(ID).signWith(SignatureAlgorithm.HS512, secretKey).compact();
 	}
-	
+
 	/**
 	 * Metodo que retorna el ID qiue encuentra en el JWT
 	 * @param JWT
 	 * @return String
 	 */
 	public String DecodeJWT(String JWT){
-		SecretKey secretKey = new SecretKeySpec(getKey().getBytes(), "AES");
-		return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(JWT).getBody().getId();
+		String retorno = "";
+		try{
+			SecretKey secretKey = new SecretKeySpec(getKey().getBytes(), "AES");
+			retorno = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(JWT).getBody().getId();
+		}catch(SignatureException e){
+			System.out.println("ERROR => "+e.getMessage());
+			retorno = "ERROR";
+		}
+		return retorno;
 	}
-	
+
 	/**
 	 * Metodo que retorna la llave para encriptar el JWT
 	 * @return String
@@ -88,7 +93,7 @@ public class ControllerJWT {
 		return documento.getString("key1");
 	}
 	public static void main(String[] args) throws NoSuchAlgorithmException {
-		SecretKey secretKey = new SecretKeySpec("loEncontre29/05/2016".getBytes(), "AES");
+		SecretKey secretKey = new SecretKeySpec("loEncontre29/05/201".getBytes(), "AES");
 		System.out.println(Jwts.builder().setId("1").signWith(SignatureAlgorithm.HS512, secretKey).compact());;
 		//eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiIxIn0.tLGSfBeI3ln-RUlzAD1KxvSeNvjcXcMZvvLmR624VdFWsm1c5bQjQ8DXM2s9gDi8rTrkKZHkNkjHGxC-mhd-0w
 	}
