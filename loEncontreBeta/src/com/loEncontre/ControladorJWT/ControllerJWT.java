@@ -1,9 +1,11 @@
 package com.loEncontre.ControladorJWT;
 
+import java.security.Key;
 import java.security.NoSuchAlgorithmException;
 
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
 
 import org.bson.Document;
 
@@ -15,6 +17,7 @@ import com.mongodb.client.MongoDatabase;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.impl.crypto.MacProvider;
 
 /**
  * @author crick
@@ -55,7 +58,7 @@ public class ControllerJWT {
 	 * @throws NoSuchAlgorithmException 
 	 */
 	public String generateJWT(String ID) throws NoSuchAlgorithmException{
-		SecretKey secretKey = KeyGenerator.getInstance(getKey()).generateKey();
+		SecretKey secretKey = new SecretKeySpec(getKey().getBytes(), "AES");
 		return Jwts.builder().setId(ID).signWith(SignatureAlgorithm.HS512, secretKey).compact();
 	}
 	
@@ -65,7 +68,8 @@ public class ControllerJWT {
 	 * @return String
 	 */
 	public String DecodeJWT(String JWT){
-		return Jwts.parser().setSigningKey(getKey()).parseClaimsJws(JWT).getBody().getId();
+		SecretKey secretKey = new SecretKeySpec(getKey().getBytes(), "AES");
+		return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(JWT).getBody().getId();
 	}
 	
 	/**
@@ -82,5 +86,10 @@ public class ControllerJWT {
 			documento = cursor.next();
 		}
 		return documento.getString("key1");
+	}
+	public static void main(String[] args) throws NoSuchAlgorithmException {
+		SecretKey secretKey = new SecretKeySpec("loEncontre29/05/2016".getBytes(), "AES");
+		System.out.println(Jwts.builder().setId("1").signWith(SignatureAlgorithm.HS512, secretKey).compact());;
+		//eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiIxIn0.tLGSfBeI3ln-RUlzAD1KxvSeNvjcXcMZvvLmR624VdFWsm1c5bQjQ8DXM2s9gDi8rTrkKZHkNkjHGxC-mhd-0w
 	}
 }

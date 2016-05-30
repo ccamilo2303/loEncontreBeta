@@ -42,7 +42,7 @@ public class CreateUserWithDocumentDAO {
 	 * Metodo que retorna una unica instancia de this
 	 * @return this
 	 */
-	public CreateUserWithDocumentDAO getInstancia(){
+	public static CreateUserWithDocumentDAO getInstancia(){
 		if(instancia_ == null){
 			instancia_ = new CreateUserWithDocumentDAO();
 		}
@@ -50,6 +50,7 @@ public class CreateUserWithDocumentDAO {
 	}
 	
 	public String createUserAndVerifyDocument(String token,String nombrePropietario,  String email){
+		System.out.println("ENTRO A REGISTRAR USUARIO ... ");
 		/*
 		 * Se valida que el documento que llega sea original
 		 * osea que esxista en la DB
@@ -113,7 +114,7 @@ public class CreateUserWithDocumentDAO {
 
 	private void registerDocument(String token, String nombrePropietario, String email){
 		MongoDatabase db = con.getDataBase();
-		MongoCollection<Document> coll = db.getCollection("validDocuments");
+		MongoCollection<Document> coll = db.getCollection("registeredDocuments");
 		Document documento = new Document();
 		documento.append("JWT", token);
 		documento.append("owner", nombrePropietario);
