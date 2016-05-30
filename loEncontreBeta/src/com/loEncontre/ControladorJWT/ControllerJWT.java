@@ -1,6 +1,9 @@
 package com.loEncontre.ControladorJWT;
 
-import java.security.Key;
+import java.security.NoSuchAlgorithmException;
+
+import javax.crypto.KeyGenerator;
+import javax.crypto.SecretKey;
 
 import org.bson.Document;
 
@@ -12,43 +15,72 @@ import com.mongodb.client.MongoDatabase;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.impl.crypto.MacProvider;
 
 /**
- * 
  * @author crick
  * 28/05/2016
  */
 public class ControllerJWT {
+	
 	/**
 	 * Variable que llama la instancia de la conexion
 	 */
 	private MongoSingletonConnection con = MongoSingletonConnection.getInstancia();
+
+	/**
+	 * Variable de instancia
+	 */
+	private static ControllerJWT instance_ = null;
 	
-	public String generateJWT(String ID){
+	/**
+	 * Contructor privado
+	 */
+	private ControllerJWT(){}
+	
+	/**
+	 * 
+	 * @return instancia de this
+	 */
+	public static ControllerJWT getInstance(){
+		if(instance_ == null){
+			instance_ = new ControllerJWT();
+		}
+		return instance_;
+	}
+	
+	/**
+	 * Metodo que retorna el JWT con el que se arma el codigo QR
+	 * @param ID
+	 * @return String
+	 * @throws NoSuchAlgorithmException 
+	 */
+	public String generateJWT(String ID) throws NoSuchAlgorithmException{
+		SecretKey secretKey = KeyGenerator.getInstance(getKey()).generateKey();
+		return Jwts.builder().setId(ID).signWith(SignatureAlgorithm.HS512, secretKey).compact();
+	}
+	
+	/**
+	 * Metodo que retorna el ID qiue encuentra en el JWT
+	 * @param JWT
+	 * @return String
+	 */
+	public String DecodeJWT(String JWT){
+		return Jwts.parser().setSigningKey(getKey()).parseClaimsJws(JWT).getBody().getId();
+	}
+	
+	/**
+	 * Metodo que retorna la llave para encriptar el JWT
+	 * @return String
+	 */
+	public String getKey(){
 		MongoDatabase db = con.getDataBase();
 		MongoCollection<Document> coll = db.getCollection("publicKey");
 		FindIterable<Document> keys = coll.find();
 		MongoCursor<Document> cursor = keys.iterator();
-		while(cursor.hasNext()){
-			
-			Document documento = cursor.next();
-			
-			System.out.println(documento);
-			System.out.println(documento.getString("key1"));;
+		Document documento = null;
+		if(cursor.hasNext()){
+			documento = cursor.next();
 		}
-		
-		Key key = MacProvider.generateKey();
-		String s = Jwts.builder().setSubject("Joe").signWith(SignatureAlgorithm.HS512, key).compact();		
-		return"";
-	}
-	
-	public String DecodeJWT(String JWT){
-		return"";
-	}
-	
-	public static void main(String[] args) {
-		ControllerJWT a = new ControllerJWT();
-		a.generateJWT("hola");
+		return documento.getString("key1");
 	}
 }

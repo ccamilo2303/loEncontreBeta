@@ -1,6 +1,15 @@
 package com.loEncontre.DAO;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+
+import org.bson.Document;
+
 import com.loEncontre.Config.MongoSingletonConnection;
+import com.loEncontre.ControladorJWT.ControllerJWT;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
 
 /**
  * 
@@ -24,6 +33,10 @@ public class CreateUserWithDocumentDAO {
 	 */
 	private MongoSingletonConnection con = MongoSingletonConnection.getInstancia();
 	
+	/**
+	 * Variable que llama la instancia del controlador JWT
+	 */
+	private ControllerJWT controllerJWT = ControllerJWT.getInstance();
 	
 	/**
 	 * Metodo que retorna una unica instancia de this
@@ -36,9 +49,79 @@ public class CreateUserWithDocumentDAO {
 		return instancia_;
 	}
 	
-	public String createUserAndVerifyDocument(String token, String correo){
+	public String createUserAndVerifyDocument(String token,String nombrePropietario,  String email){
+		/*
+		 * Se valida que el documento que llega sea original
+		 * osea que esxista en la DB
+		 */
+		boolean validacionDocumentoOriginal = verifyValidityOfTheDocument(token);
 		
-		return"";
+		if(validacionDocumentoOriginal == false){
+			return "El codigo QR es invalido";
+		}
+		
+		/*
+		 * Valida que el documento no este registrado
+		 */
+		boolean validacionDocumentoRegistrado = verifyNotRegistered(token);
+		
+		if(validacionDocumentoRegistrado == true){
+			return "El documento ya está registrado";
+		}
+		
+		/*
+		 * Se registra el documento si cumple todas las validaciones
+		 */
+		registerDocument(token, nombrePropietario, email);
+		
+		return "Documento registrado con exito";
+	}
+	
+	/**
+	 * Metodo que valida si ya esta registrado el documento
+	 * @param token
+	 * @return boolean
+	 */
+	private boolean verifyNotRegistered(String token){
+		MongoDatabase db = con.getDataBase();
+		MongoCollection<Document> coll = db.getCollection("registeredDocuments");
+		for(Document documento :  coll.find(new Document("JWT",token))){
+			return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * Metodo que valida si el documento escaneado sea original
+	 * osea que exista en la DB
+	 * @param token
+	 * @return boolean
+	 */
+	private boolean verifyValidityOfTheDocument(String token){
+		MongoDatabase db = con.getDataBase();
+		MongoCollection<Document> coll = db.getCollection("validDocuments");
+		String valorJWT = "";
+		for(Document documento :  coll.find(new Document("JWT",token))){
+			valorJWT = documento.getString("value");
+			break;
+		}
+		if(valorJWT.trim().equals(controllerJWT.DecodeJWT(token))){
+			return true;
+		}
+		return false;
 	}
 
+	private void registerDocument(String token, String nombrePropietario, String email){
+		MongoDatabase db = con.getDataBase();
+		MongoCollection<Document> coll = db.getCollection("validDocuments");
+		Document documento = new Document();
+		documento.append("JWT", token);
+		documento.append("owner", nombrePropietario);
+		documento.append("email", email);
+		documento.append("lostDocument", false);
+		Calendar date = GregorianCalendar.getInstance();
+		SimpleDateFormat formato = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		documento.append("dateRegistration", ""+formato.format(date.getTime())+"");
+		coll.insertOne(documento);
+	}
 }
