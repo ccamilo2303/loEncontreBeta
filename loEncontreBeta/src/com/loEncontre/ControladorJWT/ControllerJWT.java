@@ -3,6 +3,7 @@ package com.loEncontre.ControladorJWT;
 import java.security.NoSuchAlgorithmException;
 
 import javax.crypto.SecretKey;
+import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
 import org.bson.Document;
@@ -15,8 +16,6 @@ import com.mongodb.client.MongoDatabase;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.SignatureException;
-
 /**
  * @author crick
  * 28/05/2016
@@ -70,7 +69,7 @@ public class ControllerJWT {
 		try{
 			SecretKey secretKey = new SecretKeySpec(getKey().getBytes(), "AES");
 			retorno = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(JWT).getBody().getId();
-		}catch(SignatureException e){
+		}catch(Exception e){
 			System.out.println("ERROR => "+e.getMessage());
 			retorno = "ERROR";
 		}
