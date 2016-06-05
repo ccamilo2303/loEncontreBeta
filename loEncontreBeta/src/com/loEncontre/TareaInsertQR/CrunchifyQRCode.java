@@ -35,7 +35,7 @@ public class CrunchifyQRCode {
 			
 			Map<EncodeHintType, Object> hintMap = new EnumMap<EncodeHintType, Object>(EncodeHintType.class);
 			hintMap.put(EncodeHintType.CHARACTER_SET, "UTF-8");
-			
+				
 			// Now with zxing version 3.2.1 you could change border size (white border size to just 1)
 			hintMap.put(EncodeHintType.MARGIN, 1); /* default = 4 */
 			hintMap.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.L);
