@@ -2,7 +2,7 @@
 
 <!-- Navigation -->
 <nav class="navbar navbar-default navbar-fixed-top topnav"
-	role="navigation">
+	role="navigation" id="nav">
 	<div class="container topnav">
 		<!-- Brand and toggle get grouped for better mobile display -->
 		<div class="navbar-header">
@@ -12,7 +12,7 @@
 					class="icon-bar"></span> <span class="icon-bar"></span> <span
 					class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand topnav" href="#">Lo Encotre</a>
+			<a class="navbar-brand topnav" href="javaScript:void(0)" onclick="moveTo(0)">Lo Encotre</a>
 		</div>
 		<!-- Collect the nav links, forms, and other content for toggling -->
 		<div class="collapse navbar-collapse"
@@ -20,8 +20,8 @@
 			<ul class="nav navbar-nav navbar-right">
 				<li><a href="javaScript:void(0)"
 					onclick="moveTo('sectionCodigoQR')">Que es un codigo QR?</a></li>
-				<li><a href="javaScript:void(0)">Por que?</a></li>
-				<li><a href="javaScript:void(0)">Contacto</a></li>
+				<li><a href="javaScript:void(0)" onclick="moveTo('sectionPorQue')">Por que?</a></li>
+				<li><a href="javaScript:void(0)" onclick="moveTo('sectionContacto')">Contacto</a></li>
 			</ul>
 		</div>
 		<!-- /.navbar-collapse -->
@@ -209,9 +209,34 @@
 <!-- /.content-section-a -->
 
 
-<a name="contact"></a>
 
-<div class="content-section-b">
+
+<div class="content-section-b" id="sectionPorQue">
+
+	<div class="container">
+
+		<div class="row">
+			<div class="col-lg-5 col-lg-offset-1 col-sm-push-6  col-sm-6">
+				<h2 class="section-heading">&iquest;Por que?</h2>
+				<p class="lead" style="text-align: justify;">
+					Nació de la necesidad de las personas cuando pierden algún documento importante, <span
+						style="font-weight: bold;">Lo Encontre</span> es un medio que le facilita a la persona que 
+						encuentra algún documento.
+				</p>
+			</div>
+			<div class="col-lg-5 col-sm-pull-6  col-sm-6">
+				<img class="img-responsive" src="../img/question-mark.png" alt=""
+					width="250">
+			</div>
+		</div>
+
+	</div>
+</div>
+<!-- /.container -->
+
+
+
+<div class="content-section-b" id="sectionContacto">
 
 	<div class="container">
 
@@ -223,7 +248,7 @@
 						<div class="form-group">
 							<label for="Nombre" class="col-md-2 control-label">Nombre:</label>
 							<div class="col-md-10">
-								<input type="text" class="form-control" id="inputNombre"
+								<input type="text" class="form-control" id="inputNombre" ng-model="nombreContacto"
 									placeholder="nombre">
 							</div>
 						</div>
@@ -231,7 +256,7 @@
 						<div class="form-group">
 							<label for="inputEmail" class="col-md-2 control-label">Email:</label>
 							<div class="col-md-10">
-								<input type="email" class="form-control" id="inputEmail"
+								<input type="email" class="form-control" id="inputEmail" ng-model="emailContacto"
 									placeholder="email">
 							</div>
 						</div>
@@ -239,19 +264,19 @@
 						<div class="form-group">
 							<label for="textArea" class="col-md-2 control-label">Mensaje:</label>
 							<div class="col-md-10">
-								<textarea class="form-control" rows="3" id="textArea"
+								<textarea class="form-control" rows="3" id="textArea" ng-model="mensajeContacto"
 									placeholder="mensaje"></textarea>
 							</div>
 						</div>
 						<div class="form-group">
-							<div class="input-group col-md-1 col-sm-1 col-xm-1 col-lg-1">
-								<label for="textArea" class="col-md-2 control-label">Mensaje:</label>
-								<span class="input-group-btn">
-									<button type="button" class="btn btn-fab btn-fab-mini">
-										<i class="material-icons">send</i>
-									</button>
-								</span>
-							</div>
+						<div class="col-md-10 col-md-offset-2">
+						<button class="btn btn-raised btn-primary"
+								ng-click="enviarMensajeContacto()">
+								<span
+									class="glyphicon glyphicon-refresh glyphicon-refresh-animate"
+									ng-show="load"></span> Enviar
+							</button>
+						</div>
 						</div>
 					</div>
 				</fieldset>
@@ -263,22 +288,13 @@
 <!-- /.container -->
 
 
+
 <!-- Footer -->
 <footer>
 	<div class="container">
 		<div class="row">
 			<div class="col-lg-12">
-				<ul class="list-inline">
-					<li><a href="#">Home</a></li>
-					<li class="footer-menu-divider">&sdot;</li>
-					<li><a href="#about">About</a></li>
-					<li class="footer-menu-divider">&sdot;</li>
-					<li><a href="#services">Services</a></li>
-					<li class="footer-menu-divider">&sdot;</li>
-					<li><a href="#contact">Contact</a></li>
-				</ul>
-				<p class="copyright text-muted small">Copyright &copy; Your
-					Company 2014. All Rights Reserved</p>
+				<p class="copyright text-muted small">Copyright &copy; Lo Encontre 2016. Todos los derechos reservados</p>
 			</div>
 		</div>
 	</div>
@@ -297,8 +313,7 @@
 	-moz-animation: spinm .7s infinite linear;
 }
 
-@
-keyframes spin {from { transform:scale(1)rotate(0deg);
+@keyframes spin {from { transform:scale(1)rotate(0deg);
 	
 }
 
@@ -307,8 +322,7 @@ to {
 }
 
 }
-@
--webkit-keyframes spinw {from { -webkit-transform:rotate(0deg);
+@-webkit-keyframes spinw {from { -webkit-transform:rotate(0deg);
 	
 }
 
@@ -317,8 +331,7 @@ to {
 }
 
 }
-@
--moz-keyframes spinm {from { -moz-transform:rotate(0deg);
+@-moz-keyframes spinm {from { -moz-transform:rotate(0deg);
 	
 }
 

@@ -11,7 +11,7 @@ import org.json.JSONObject;
 import com.loEncontre.DAO.FindAllDocumentDAO;
 
 @Path("encontrarDocumentos")
-public class FindAllDocuments {
+public class FindAllDocumentsREST {
 
 	private FindAllDocumentDAO findDocuments = FindAllDocumentDAO.getInstance();
 	

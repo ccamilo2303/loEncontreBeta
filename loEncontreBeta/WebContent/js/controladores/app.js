@@ -1,3 +1,8 @@
+/**
+ * @autor crick
+ * 06/06/2016
+ */
+
 var modulo = angular.module('loEncontreApp',['ngRoute'])
 .config(['$routeProvider', function($routeProvider){
 	$routeProvider
@@ -11,9 +16,16 @@ var modulo = angular.module('loEncontreApp',['ngRoute'])
 
 }]);
 
+/**
+ * Modulo que controla la landin page
+ */
 modulo.controller('main', function($scope,$http){
 	$scope.load = false;
 	$scope.labelBoton = 'Buscar';
+	
+	/*
+	 * Busca el email
+	 */
 	$scope.validarEmail = function(){
 		var email = $scope.emailLogin;
 		if(email == undefined){
@@ -33,13 +45,41 @@ modulo.controller('main', function($scope,$http){
 			}
 		});
 	}
+	
+	/*
+	 * Envia el mensaje de contacto
+	 */
+	$scope.enviarMensajeContacto = function(){
+		 if($scope.nombreContacto == undefined ||  $scope.emailContacto == undefined  || $scope.mensajeContacto == undefined ){
+			 new swal({   title: "Error!",   text: "Hay que llenar todos los campos",   type: "error",   confirmButtonText: "Cerrar" });
+			 return;
+		 }
+		if($scope.nombreContacto.replace(' ','') == '' ||  $scope.emailContacto.replace(' ','') == '' || $scope.mensajeContacto.replace(' ','') == ''){
+			new swal({   title: "Error!",   text: "Hay que llenar todos los campos",   type: "error",   confirmButtonText: "Cerrar" });
+			return;
+		}
+		$scope.load = true;
+		$http.get("../rest/enviarEmail/"+$scope.nombreContacto+"/"+$scope.emailContacto+"/"+$scope.mensajeContacto)
+		.then(function(data){
+			$scope.load = false;
+			if(data.data.msg == true){
+				new swal({   title: "Correcto",   text: "Gracias por contactarnos, pronto responderemos a tu solicitud.",   type: "info",   confirmButtonText: "Cerrar" });
+			}else{
+				new swal({   title: "Error!",   text: "El mensaje no pudo ser enviado, por favor intente mas tarde",   type: "error",   confirmButtonText: "Cerrar" });
+			}
+			$scope.nombreContacto = '';
+			$scope.emailContacto = '';
+			$scope.mensajeContacto = '';
+		});
+		
+	}
 })
 
 
 function moveTo(to){
-	console.log(to+' ---- ');
+	var top = (to != 0 ? $("#"+to+"").offset().top-90:0);
 	$('html, body').animate({
-		scrollTop: $("#"+to+"").offset().top
-	}, 800);
+		scrollTop: top 
+	}, 900);
 }
 
