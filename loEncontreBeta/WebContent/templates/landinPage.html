@@ -21,7 +21,7 @@
 				<li><a href="javaScript:void(0)"
 					onclick="moveTo('sectionCodigoQR')">Que es un codigo QR?</a></li>
 				<li><a href="javaScript:void(0)" onclick="moveTo('sectionPorQue')">Por que?</a></li>
-				<li><a href="javaScript:void(0)" onclick="moveTo('sectionContacto')">Contacto</a></li>
+				<li><a href="javaScript:void(0)" onclick="moveTo('sectionContacto')">Contactanos</a></li>
 			</ul>
 		</div>
 		<!-- /.navbar-collapse -->
@@ -39,7 +39,7 @@
 		<div class="row">
 			<div class="col-lg-12">
 				<div class="intro-message">
-					<h1>Lo Encontre!</h1>
+					<img alt="" src="../img/logoLetraBlanca.png" width="300"> 
 					<h3>Ingresa tu correo electronico para encontrar tus
 						documentos</h3>
 					<div class="col-sm-7 col-lg-7 col-xm-7 col-sm-offset-3">
@@ -163,8 +163,8 @@
 				<p class="lead" style="text-align: justify;">
 					Escribe el Email con el cual registraste el documento, procura usar
 					el mismo Email al momento de registrar tus documentos, esto te
-					ayudará a encontrar tus documentos más facilmente. <span
-						style="font-weight: bold;">Lo Encontre</span> te mostrará los
+					ayudar&aacute; a encontrar tus documentos m&aacute;s facilmente. <span
+						style="font-weight: bold;">Lo Encontre</span> te mostrar&aacute; los
 					documentos registrados con ese email, selecciona el documento que
 					perdiste y reportalo como perdido.
 				</p>
@@ -188,9 +188,9 @@
 			<div class="col-lg-5 col-sm-6">
 				<h2 class="section-heading">Y un ciudadano ejemplar..</h2>
 				<p class="lead" style="text-align: justify;">
-					Encontrará tu documento.<br> <br> <span
+					Encontrar&aacute; tu documento.<br> <br> <span
 						style="font-weight: bold">Lo Encontre</span>, es un medio por el
-					cual la persona que encuentre tu documento te podrá contactar de
+					cual la persona que encuentre tu documento te podr&aacute; contactar de
 					una manera facil y segura.<br> Esto te va a evitar filas y
 					tramites que pueden llevar mucho tiempo.
 
@@ -219,9 +219,9 @@
 			<div class="col-lg-5 col-lg-offset-1 col-sm-push-6  col-sm-6">
 				<h2 class="section-heading">&iquest;Por que?</h2>
 				<p class="lead" style="text-align: justify;">
-					Nació de la necesidad de las personas cuando pierden algún documento importante, <span
+					Naci&oacute; de la necesidad de las personas cuando pierden alg&uacute;n documento importante, <span
 						style="font-weight: bold;">Lo Encontre</span> es un medio que le facilita a la persona que 
-						encuentra algún documento.
+						encuentra alg&uacute;n documento.
 				</p>
 			</div>
 			<div class="col-lg-5 col-sm-pull-6  col-sm-6">
@@ -243,13 +243,14 @@
 		<div class="row">
 			<form class="form-horizontal">
 				<fieldset>
-					<legend>Contacto</legend>
 					<div class="well bs-component">
+					<legend>Contact&aacute;nos</legend>
+					<h5>D&eacute;janos un mensaje y podr&aacute;s resolver cualquier duda que tengas con respecto a <span style="font-weight: bold">Lo Encontre!</span></h5>
 						<div class="form-group">
 							<label for="Nombre" class="col-md-2 control-label">Nombre:</label>
 							<div class="col-md-10">
 								<input type="text" class="form-control" id="inputNombre" ng-model="nombreContacto"
-									placeholder="nombre">
+									placeholder="tu nombre">
 							</div>
 						</div>
 
@@ -257,7 +258,7 @@
 							<label for="inputEmail" class="col-md-2 control-label">Email:</label>
 							<div class="col-md-10">
 								<input type="email" class="form-control" id="inputEmail" ng-model="emailContacto"
-									placeholder="email">
+									placeholder="tu email">
 							</div>
 						</div>
 
@@ -265,7 +266,7 @@
 							<label for="textArea" class="col-md-2 control-label">Mensaje:</label>
 							<div class="col-md-10">
 								<textarea class="form-control" rows="3" id="textArea" ng-model="mensajeContacto"
-									placeholder="mensaje"></textarea>
+									placeholder="escribe aqui el mensaje que nos quieres dejar"></textarea>
 							</div>
 						</div>
 						<div class="form-group">
@@ -338,5 +339,8 @@ to {
 to {
 	-moz-transform: rotate(360deg);
 }
+}
+.intro-message{
+padding-top : 0px;
 }
 </style>
