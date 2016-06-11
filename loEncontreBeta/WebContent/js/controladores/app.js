@@ -9,6 +9,9 @@ var modulo = angular.module('loEncontreApp',['ngRoute'])
 	.when('/', {
 		templateUrl: '../templates/landinPage.html',
 		controller: 'main'
+	}).when('/dashBoard',{
+		templateUrl: '../templates/dashBoard.html',
+		controller: 'dashBoard'
 	}).
 	otherwise({
 		redirectTo: '/addOrder'
@@ -75,6 +78,9 @@ modulo.controller('main', function($scope,$http){
 	}
 })
 
+modulo.controller('dashBoard', function($scope,$http, $location){
+	console.log('ENTRO DAS -- ' +$location);
+});
 
 function moveTo(to){
 	var top = (to != 0 ? $("#"+to+"").offset().top-90:0);
