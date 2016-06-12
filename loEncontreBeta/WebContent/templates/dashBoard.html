@@ -2,10 +2,7 @@
 
 <title>Panel de administrador, Lo Encontre!</title>
 
-<link href="../css/sb-admin.css" rel="stylesheet">
-<link href="../css/morris.css" rel="stylesheet">
-<link href="../css/font-awesome.min.css" rel="stylesheet"
-	type="text/css">
+
 
 <style>
 .top-nav>li>a {
@@ -33,7 +30,7 @@ canvas {
 
 		<!-- Navigation -->
 		<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation"
-			style="background: #009688;">
+			style="background: #009688; height: 10px;">
 			<!-- Brand and toggle get grouped for better mobile display -->
 			<div class="navbar-header">
 				<button type="button" class="navbar-toggle" data-toggle="collapse"
@@ -42,14 +39,15 @@ canvas {
 						class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="/">Lo Encontre</a>
+				<a class="navbar-brand" style="line-height: 20px" href="/">Lo
+					Encontre</a>
 			</div>
 			<!-- Top Menu Items -->
 			<ul class="nav navbar-right top-nav">
 
-				<li class="dropdown"><a href="#" class="dropdown-toggle"
-					data-toggle="dropdown"><i class="fa fa-user"></i> John Smith <b
-						class="caret"></b></a>
+				<li class="dropdown"><a href="#/dashBoard"
+					class="dropdown-toggle" data-toggle="dropdown"><i
+						class="fa fa-user"></i> Camilo Beltrán <b class="caret"></b></a>
 					<ul class="dropdown-menu">
 						<li><a href="#"><i class="fa fa-fw fa-user"></i> Profile</a>
 						</li>
@@ -64,12 +62,12 @@ canvas {
 			</ul>
 			<!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
 			<div class="collapse navbar-collapse navbar-ex1-collapse">
-				<ul class="nav navbar-nav side-nav" style="top: 60px;">
-					<li class="active"><a href="index.html"><i
+				<ul class="nav navbar-nav side-nav">
+					<li class="active"><a href="javaScript:void(0)" ng-click="asignarView('inicioDashBoard')"><i
 							class="fa fa-fw fa-dashboard"></i>Inicio</a></li>
 					<li><a href="charts.html"><i
 							class="fa fa-fw fa-bar-chart-o"></i>Registrar Documento</a></li>
-					<li><a href="tables.html"><i class="fa fa-fw fa-table"></i>Consultar
+					<li><a href="javaScript:void(0)" ng-click="asignarView('findDocument')"><i class="fa fa-fw fa-table"></i>Consultar
 							mis Documentos</a></li>
 					<li><a href="forms.html"><i class="fa fa-fw fa-edit"></i>Encontré
 							un documento</a></li>
@@ -81,142 +79,8 @@ canvas {
 		<div id="page-wrapper">
 
 			<div class="container-fluid">
-
-				<!-- Page Heading -->
-				<div class="row">
-					<div class="col-lg-12">
-						<h1 class="page-header">Inicio</h1>
-					</div>
-				</div>
-
-
-				<div class="row col-centered">
-					<div class="col-lg-3 col-md-6">
-						<div class="panel panel-info">
-							<div class="panel-heading"
-								style="background: #3b5998; color: white">
-								<div class="row">
-									<div class="col-xs-3">
-										<i class="fa fa-facebook-square fa-5x"></i>
-									</div>
-									<div class="col-xs-9 text-right">
-										<div class="huge">26</div>
-										<div>Personas apoyan</div>
-										<div>Lo Encontre!</div>
-									</div>
-								</div>
-							</div>
-							<a href="#">
-								<div class="panel-footer">
-									<span class="pull-left">Apoyanos con un :</span> <span
-										class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-									<div class="clearfix"></div>
-								</div>
-							</a>
-						</div>
-					</div>
-					<div class="col-lg-3 col-md-6">
-						<div class="panel panel-green">
-							<div class="panel-heading" style="background: #1da1f2;">
-								<div class="row">
-									<div class="col-xs-3">
-										<i class="fa fa-twitter fa-5x"></i>
-									</div>
-									<div class="col-xs-9 text-right">
-										<div class="huge">12</div>
-										<div>Personas siguen a</div>
-										<div>Lo Encontre!</div>
-									</div>
-								</div>
-							</div>
-							<a href="#">
-								<div class="panel-footer">
-									<span class="pull-left">Síguenos en:</span> <span
-										class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-									<div class="clearfix"></div>
-								</div>
-							</a>
-						</div>
-					</div>
-
-					<div class="col-lg-3 col-md-6">
-						<div class="panel panel-red">
-							<div class="panel-heading" style="background: #db4437;">
-								<div class="row">
-									<div class="col-xs-3">
-										<i class="fa fa-google-plus  fa-5x"></i>
-									</div>
-									<div class="col-xs-9 text-right">
-										<div class="huge">13</div>
-										<div>Personas apoyan a Lo Encontre!</div>
-									</div>
-								</div>
-							</div>
-							<a href="#">
-								<div class="panel-footer">
-									<span class="pull-left">Unete:</span> <span class="pull-right"><i
-										class="fa fa-arrow-circle-right"></i></span>
-									<div class="clearfix"></div>
-								</div>
-							</a>
-						</div>
-					</div>
-				</div>
-				<!-- /.row -->
-
-				<div class="row">
-					<div class="col-lg-12">
-						<div class="panel panel-default">
-							<div class="panel-heading">
-								<h3 class="panel-title">
-									<i class="fa fa-bar-chart-o fa-fw"></i> Documentos Registrados
-								</h3>
-							</div>
-							<div class="panel-body">
-								<div style="width: 100%;">
-									<canvas id="canvas"></canvas>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<!-- /.row -->
-
-				<div class="row">
-					<div class="col-lg-12">
-						<div class="panel panel-default">
-							<div class="panel-heading">
-								<h3 class="panel-title">
-									<i class="fa fa-bar-chart-o fa-fw"></i> Este es el grafico de los documentos que has encontrado
-								</h3>
-							</div>
-							<div class="panel-body">
-								<div style="width: 100%;">
-									<canvas id="canvasEstatisticasCliente"></canvas>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<!-- /.row -->
-
+			<div ng-include="view"></div>
 			</div>
-			<!-- /#page-wrapper -->
 
 		</div>
 		<!-- /#wrapper -->
-
-		<!-- jQuery -->
-		<script src="../js/jquery.js"></script>
-
-		<!-- Bootstrap Core JavaScript -->
-		<script src="../js/bootstrap.min.js"></script>
-
-		<!-- Morris Charts JavaScript -->
-		<script src="../js/raphael.min.js"></script>
-		<script src="../js/morris.js"></script>
-		<script src="../js/morris-data.js"></script>
-		<script src="../js/propiedadesGraficosChart.js"></script>
-		<script type="text/javascript">
-		loadGraphics();
-		</script>

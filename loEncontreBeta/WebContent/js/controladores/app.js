@@ -79,7 +79,24 @@ modulo.controller('main', function($scope,$http){
 })
 
 modulo.controller('dashBoard', function($scope,$http, $location){
+	$scope.view =  '../templates/inicioDashBoard.html';
+	$scope.asignarView = function(a){
+		$scope.view = '../templates/'+a+'.html';
+	}
 	console.log('ENTRO DAS -- ' +$location);
+});
+
+modulo.controller('findDocuments', function($scope,$http, $location){
+	console.log('ENTRO CONTROLADOR FIND DOCUMENTS');
+	$scope.documents = [
+{"DESCRIPCION":"Hola", "FECHAREGISTRO":"20/05/2016", "PERDIDO":false},
+{"DESCRIPCION":"Hola", "FECHAREGISTRO":"20/05/2016", "PERDIDO":false},
+	                    {"DESCRIPCION":"Hola", "FECHAREGISTRO":"20/05/2016", "PERDIDO":false},
+	                    {"DESCRIPCION":"Hsdfola", "FECHAREGISTRO":"20/05/2016", "PERDIDO":true}
+	                    ];
+	$scope.guardar = function(a){
+		console.log(a.DESCRIPCION);
+	}
 });
 
 function moveTo(to){

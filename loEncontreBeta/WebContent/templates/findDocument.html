@@ -1,0 +1,45 @@
+<div class="row" ng-controller="findDocuments">
+	<div class="col-lg-12">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">
+					<i class="fa fa-bar-chart-o fa-fw"></i> Consultar Mis Documentos...
+				</h3>
+			</div>
+			<div class="panel-body">
+				<div class="form-horizontal"></div>
+				<div class="form-group" ng-repeat="document in documents">
+					<hr width="100%">
+
+					<label class="col-md-1 col-sm-3 col-xs-3 control-label">Descripción:</label>
+					<div class="col-md-3 col-sm-3 col-xs-3">
+						<input ng-model="document.DESCRIPCION" type="text"
+							class="form-control" style="color: black"
+							placeholder="Descripción">
+					</div>
+
+
+					<div class="col-md-2 col-sm-2 col-xs-2">
+						<div class="togglebutton">
+							<label> Lo Has Perdido? <input type="checkbox"
+								checked="check" ng-model="document.PERDIDO"> <span
+								class="toggle"></span>
+							</label>
+						</div>
+					</div>
+
+						<button class="btn btn-raised btn-primary " ng-click="guardar(document)">
+							<span class="glyphicon glyphicon-floppy-disk"></span> Guardar
+						</button>
+						<button class="btn btn-raised btn-danger  ">
+							<span class="glyphicon glyphicon-trash"></span> Borrar
+						</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+</div>
+<!-- /.row -->
+
