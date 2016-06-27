@@ -49,7 +49,7 @@ public class CreateUserWithDocumentDAO {
 		return instancia_;
 	}
 	
-	public String createUserAndVerifyDocument(String token,String nombrePropietario,  String email){
+	public int createUserAndVerifyDocument(String token){
 		System.out.println("ENTRO A REGISTRAR USUARIO ... ");
 		/*
 		 * Se valida que el documento que llega sea original
@@ -58,7 +58,8 @@ public class CreateUserWithDocumentDAO {
 		boolean validacionDocumentoOriginal = verifyValidityOfTheDocument(token);
 		
 		if(validacionDocumentoOriginal == false){
-			return "El codigo QR es invalido";
+			return 1;
+//			return "El codigo QR es invalido";
 		}
 		
 		/*
@@ -67,15 +68,11 @@ public class CreateUserWithDocumentDAO {
 		boolean validacionDocumentoRegistrado = verifyNotRegistered(token);
 		
 		if(validacionDocumentoRegistrado == true){
-			return "El documento ya está registrado";
+			return 2;
+//			return "El documento ya está registrado";
 		}
 		
-		/*
-		 * Se registra el documento si cumple todas las validaciones
-		 */
-		registerDocument(token, nombrePropietario, email);
-		
-		return "Documento registrado con exito";
+		return 3;
 	}
 	
 	/**
@@ -102,7 +99,7 @@ public class CreateUserWithDocumentDAO {
 		MongoDatabase db = con.getDataBase();
 		MongoCollection<Document> coll = db.getCollection("validDocuments");
 		String valorJWT = "";
-		for(Document documento :  coll.find(new Document("JWT",token))){
+		for(Document documento :  coll.find(new Document("jwt",token))){
 			valorJWT = documento.getString("value");
 			break;
 		}
@@ -116,7 +113,7 @@ public class CreateUserWithDocumentDAO {
 		MongoDatabase db = con.getDataBase();
 		MongoCollection<Document> coll = db.getCollection("registeredDocuments");
 		Document documento = new Document();
-		documento.append("JWT", token);
+		documento.append("jwt", token);
 		documento.append("owner", nombrePropietario);
 		documento.append("email", email);
 		documento.append("lostDocument", false);
@@ -124,5 +121,16 @@ public class CreateUserWithDocumentDAO {
 		SimpleDateFormat formato = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		documento.append("dateRegistration", ""+formato.format(date.getTime())+"");
 		coll.insertOne(documento);
+	}
+	
+	public String findNameByEmail(String email){
+		String nombre = "";
+		MongoDatabase db = con.getDataBase();
+		MongoCollection<Document> coll = db.getCollection("registeredDocuments");
+		for(Document d : coll.find(new Document("email", email))){
+			nombre = d.getString("name");
+			break;
+		}
+		return nombre;
 	}
 }

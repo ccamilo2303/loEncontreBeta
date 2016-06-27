@@ -7,19 +7,34 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import com.loEncontre.dao.CreateUserWithDocumentDAO;
-
+/**
+ * 
+ * @author crick
+ * 26/06/2016
+ */
 @Path("registrarUsuario")
 public class RegisteredUserREST {
 
 	private CreateUserWithDocumentDAO createUser = CreateUserWithDocumentDAO.getInstancia();
 
+	/**
+	 * Valida que el codigo QR no este registrado y tambiena valida que sea valido
+	 * @param token
+	 * @return
+	 */
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	@Path("/{token}/{nombrePropietario}/{email}")
-	public String insertDocument(@PathParam("token") String token, @PathParam("nombrePropietario") String nombrePropietario, @PathParam("email") String email){
-		System.out.println("1");
-		String retorno = createUser.createUserAndVerifyDocument(token, nombrePropietario, email);
-		System.out.println("2");
-		return "{\"hola\":"+retorno+"}";
+	@Path("/validar/{token}")
+	public String validateQR(@PathParam("token") String token){
+		int retorno = createUser.createUserAndVerifyDocument(token);
+		return "{\"indice\": "+retorno+" }";	
 	}
+	
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/{email}")
+	public String findNameByEmail(@PathParam("email") String email){
+		return "{\"name\": \" "+createUser.findNameByEmail(email)+"\" }";
+	}
+	
 }

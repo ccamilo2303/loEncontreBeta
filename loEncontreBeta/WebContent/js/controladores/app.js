@@ -12,9 +12,15 @@ var modulo = angular.module('loEncontreApp',['ngRoute'])
 	}).when('/dashBoard',{
 		templateUrl: '../templates/dashBoard.html',
 		controller: 'dashBoard'
+	}).when('/register',{
+		templateUrl: '../templates/registerDocument.html',
+		controller: 'register'
+	}).when('/validate',{
+		templateUrl: '../templates/validar.html',
+		controller: 'validate'
 	}).
 	otherwise({
-		redirectTo: '/addOrder'
+		redirectTo: '/'
 	});
 
 }]);
@@ -25,7 +31,7 @@ var modulo = angular.module('loEncontreApp',['ngRoute'])
 modulo.controller('main', function($scope,$http){
 	$scope.load = false;
 	$scope.labelBoton = 'Buscar';
-	
+
 	/*
 	 * Busca el email
 	 */
@@ -48,15 +54,15 @@ modulo.controller('main', function($scope,$http){
 			}
 		});
 	}
-	
+
 	/*
 	 * Envia el mensaje de contacto
 	 */
 	$scope.enviarMensajeContacto = function(){
-		 if($scope.nombreContacto == undefined ||  $scope.emailContacto == undefined  || $scope.mensajeContacto == undefined ){
-			 new swal({   title: "Error!",   text: "Hay que llenar todos los campos",   type: "error",   confirmButtonText: "Cerrar" });
-			 return;
-		 }
+		if($scope.nombreContacto == undefined ||  $scope.emailContacto == undefined  || $scope.mensajeContacto == undefined ){
+			new swal({   title: "Error!",   text: "Hay que llenar todos los campos",   type: "error",   confirmButtonText: "Cerrar" });
+			return;
+		}
 		if($scope.nombreContacto.replace(' ','') == '' ||  $scope.emailContacto.replace(' ','') == '' || $scope.mensajeContacto.replace(' ','') == ''){
 			new swal({   title: "Error!",   text: "Hay que llenar todos los campos",   type: "error",   confirmButtonText: "Cerrar" });
 			return;
@@ -74,7 +80,7 @@ modulo.controller('main', function($scope,$http){
 			$scope.emailContacto = '';
 			$scope.mensajeContacto = '';
 		});
-		
+
 	}
 })
 
@@ -91,12 +97,42 @@ modulo.controller('findDocuments', function($scope,$http, $location){
 	$scope.documents = [
 {"DESCRIPCION":"Hola", "FECHAREGISTRO":"20/05/2016", "PERDIDO":false},
 {"DESCRIPCION":"Hola", "FECHAREGISTRO":"20/05/2016", "PERDIDO":false},
-	                    {"DESCRIPCION":"Hola", "FECHAREGISTRO":"20/05/2016", "PERDIDO":false},
-	                    {"DESCRIPCION":"Hsdfola", "FECHAREGISTRO":"20/05/2016", "PERDIDO":true}
-	                    ];
+{"DESCRIPCION":"Hola", "FECHAREGISTRO":"20/05/2016", "PERDIDO":false},
+{"DESCRIPCION":"Hsdfola", "FECHAREGISTRO":"20/05/2016", "PERDIDO":true}
+];
 	$scope.guardar = function(a){
 		console.log(a.DESCRIPCION);
 	}
+});
+
+modulo.controller('register', function($scope,$http,$location){
+	$scope.load = false;
+
+	$scope.guardar = function(){
+		console.log($scope.nombre+' '+$scope.email);
+		new swal({   title: "Correcto",   text: "Gracias por Registrar tu documento. <a href='/'>Regresar al Inicio</a>",   type: "success",   confirmButtonText: "Ok", html:true});
+	}
+	$scope.consultarNombre = function(){
+		$scope.load = true;
+		$http.get("../rest/registrarUsuario/"+$scope.email)
+		.then(function(data){
+			console.log(data);
+			$scope.nombre = data.data.name;
+			$('[href=#step2]').tab('show');
+			$scope.load = false;
+		});
+	}
+});
+
+modulo.controller('validate', function($scope,$http,$location){
+	var valueParam = $location.url().split('?')[1];
+	console.log(valueParam);
+	$http.get('../rest/registrarUsuario/validar/'+valueParam).then(function(data){
+		var indice = data.data.indice;
+		if(indice == 1){
+			$scope.include = '../templates/registerDocument.html';
+		}
+	})
 });
 
 function moveTo(to){

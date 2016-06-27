@@ -1,0 +1,183 @@
+
+<nav class="navbar navbar-default navbar-fixed-top topnav"
+	role="navigation" id="nav">
+	<div class="container topnav">
+		<!-- Brand and toggle get grouped for better mobile display -->
+		<div class="navbar-header">
+			<a class="navbar-brand topnav" href="#/" onclick="moveTo(0)">Lo
+				Encotre</a>
+		</div>
+		<!-- Collect the nav links, forms, and other content for toggling -->
+		<div class="collapse navbar-collapse"
+			id="bs-example-navbar-collapse-1"></div>
+		<!-- /.navbar-collapse -->
+	</div>
+	<!-- /.container -->
+</nav>
+<div class="container col-sm-5 col-centered" id="myWizard"
+	style="margin-top: 50px;">
+
+	<h3>Registrar Documento</h3>
+
+	<hr>
+
+	<div class="progress">
+		<div class="progress-bar progress-bar-success" role="progressbar"
+			aria-valuenow="1" aria-valuemin="1" aria-valuemax="2"
+			style="width: 10%;"></div>
+	</div>
+
+	<div class="navbar" style="background: none; display: none">
+		<div class="navbar-inner">
+			<ul class="nav nav-pills">
+				<li class="active"><a href="#step1" data-toggle="tab"
+					data-step="1">Paso 1</a></li>
+				<li><a href="#step2" data-toggle="tab" data-step="2">Paso 2</a></li>
+				<li><a href="#step3" data-toggle="tab" data-step="3">Paso 3</a></li>
+				<li><a href="#step4" data-toggle="tab" data-step="4">Paso 4</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="tab-content">
+		<div class="tab-pane fade in active" id="step1">
+			<div class="well form-group">
+				<label class="control-label">C&oacute;mo es tu correo
+					Electr&oacute;nico:</label>
+				<div class="">
+					<input ng-model="email" type="email" class="form-control"
+						style="color: black">
+				</div>
+			</div>
+			<button class="btn btn-raised btn-primary" ng-show="email" ng-click="consultarNombre();">
+			<span class="glyphicon glyphicon-refresh glyphicon-refresh-animate" ng-show="load"></span>  
+			Siguiente</button>
+		</div>
+		<div class="tab-pane fade" id="step2">
+
+			<div class="well form-group">
+
+				<label class="control-label">Cu&aacute;l es tu nombre:</label>
+				<div class="">
+					<input ng-model="nombre" type="text" class="form-control" ng-disabled="disabled"
+						style="color: black">
+				</div>
+			</div>
+			<a class="btn btn-raised btn-primary prev" href="#">Atr&aacute;s</a>
+			<a class="btn btn-raised btn-primary next" href="#"
+				ng-show="nombre.length >= 4">Siguiente</a>
+
+		</div>
+
+		<div class="tab-pane fade" id="step3">
+			<div class="well form-group">
+				<label class="control-label">Danos una Descripci&oacute;n de
+					este documento (ej Ced&uacute;la):</label>
+				<div class="">
+					<input ng-model="descripcion" type="text" class="form-control"
+						style="color: black">
+				</div>
+			</div>
+			<a class="btn btn-raised btn-primary prev" href="#">Atr&aacute;s</a>
+			<a class="btn btn-raised btn-primary next" href="#"
+				ng-show="descripcion.length > 4">Siguiente</a>
+		</div>
+
+		<div class="tab-pane fade" id="step4">
+			<div class="well">
+				<h1>Correcto!</h1>
+				<h4 style="text-align: justify;">Recuerda que para cambiar el
+					estado de tu documento, buscalo por el correo Electr&oacute;nico
+					que nos proporcionaste "{{email}}"</h4>
+			</div>
+			<a class="btn btn-raised btn-primary prev" href="#">Atr&aacute;s</a>
+			<button class="btn btn-raised btn-success" ng-click="guardar();">Guardar</button>
+		</div>
+	</div>
+
+</div>
+
+
+<script>
+$('.next').click(function(){
+	  var nextId = $(this).parents('.tab-pane').next().attr("id");
+	  $('[href=#'+nextId+']').tab('show');
+	  return false;
+	})
+
+$('.prev').click(function(){
+	  var nextId = $(this).parents('.tab-pane').prev().attr("id");
+	  $('[href=#'+nextId+']').tab('show');
+	  return false;
+	})
+
+	
+	
+	$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+	  
+	  //update progress
+	  var step = $(e.target).data('step');
+	  var percent = (parseInt(step) / 4) * 100;
+	  
+	  $('.progress-bar').css({width: percent + '%'});
+	  $('.progress-bar').text("Step " + step + " of 5");
+	  
+	  //e.relatedTarget // previous tab
+	  
+	})
+</script>
+
+<style>
+.form-group label.control-label {
+	font-size: 17;
+}
+
+.col-centered {
+	float: none;
+	margin: 0 auto;
+}
+
+body {
+	overflow: hidden;
+}
+/*
+    Original version: http://www.bootply.com/128062
+    
+    This version adds support for IE 10+ and Firefox.
+*/
+.glyphicon-refresh-animate {
+	-animation: spin .7s infinite linear;
+	-ms-animation: spin .7s infinite linear;
+	-webkit-animation: spinw .7s infinite linear;
+	-moz-animation: spinm .7s infinite linear;
+}
+
+@keyframes spin {from { transform:scale(1)rotate(0deg);
+	
+}
+
+to {
+	transform: scale(1) rotate(360deg);
+}
+
+}
+@-webkit-keyframes spinw {from { -webkit-transform:rotate(0deg);
+	
+}
+
+to {
+	-webkit-transform: rotate(360deg);
+}
+
+}
+@-moz-keyframes spinm {from { -moz-transform:rotate(0deg);
+	
+}
+
+to {
+	-moz-transform: rotate(360deg);
+}
+}
+.intro-message{
+padding-top : 0px;
+}
+</style>
