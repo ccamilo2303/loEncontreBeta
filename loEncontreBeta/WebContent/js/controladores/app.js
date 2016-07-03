@@ -106,33 +106,72 @@ modulo.controller('findDocuments', function($scope,$http, $location){
 });
 
 modulo.controller('register', function($scope,$http,$location){
-	$scope.load = false;
+	var indiceRespuesta;
+	var renderLoad = true;
+	var valueParam = $location.url().split('?')[1];
+	$http.get('../rest/registrarUsuario/validar/'+valueParam).then(function(data){
+		$scope.render = data.data.indice;
+		var renderLoad = false;
+	});
+	
+	
+	/*
+	 * Envia el mensaje de contacto
+	 */
+	$scope.enviarMensajeContacto = function(){
+		if($scope.nombreContacto == undefined ||  $scope.emailContacto == undefined  || $scope.mensajeContacto == undefined ){
+			new swal({   title: "Error!",   text: "Hay que llenar todos los campos",   type: "error",   confirmButtonText: "Cerrar" });
+			return;
+		}
+		if($scope.nombreContacto.replace(' ','') == '' ||  $scope.emailContacto.replace(' ','') == '' || $scope.mensajeContacto.replace(' ','') == ''){
+			new swal({   title: "Error!",   text: "Hay que llenar todos los campos",   type: "error",   confirmButtonText: "Cerrar" });
+			return;
+		}
+		$scope.load = true;
+		$http.get("../rest/enviarEmail/"+$scope.nombreContacto+"/"+$scope.emailContacto+"/"+$scope.mensajeContacto)
+		.then(function(data){
+			$scope.load = false;
+			if(data.data.msg == true){
+				new swal({   title: "Correcto",   text: "Gracias por contactarnos, pronto responderemos a tu solicitud.",   type: "info",   confirmButtonText: "Cerrar" });
+			}else{
+				new swal({   title: "Error!",   text: "El mensaje no pudo ser enviado, por favor intente mas tarde",   type: "error",   confirmButtonText: "Cerrar" });
+			}
+			$scope.nombreContacto = '';
+			$scope.emailContacto = '';
+			$scope.mensajeContacto = '';
+		});
 
+	}
+	
+	
+	
+	$scope.load = false;
+	var encontro = false;
 	$scope.guardar = function(){
-		console.log($scope.nombre+' '+$scope.email);
-		new swal({   title: "Correcto",   text: "Gracias por Registrar tu documento. <a href='/'>Regresar al Inicio</a>",   type: "success",   confirmButtonText: "Ok", html:true});
+		$scope.load = true;
+		var valueParam = $location.url().split('?')[1];
+		$http.get("../rest/registrarUsuario/"+valueParam+'/'+$scope.email+'/'+$scope.nombre+'/'+$scope.descripcion)
+		.then(function(data){
+			if(data.data.msg == true){
+				new swal({   title: "Error!",   text: data.data.mensaje,   type: "error",   confirmButtonText: "Ok", html:true});	
+			}else{
+				new swal({   title: "Correcto",   text: "Gracias por Registrar tu documento. <a href='/'>Regresar al Inicio</a>",   type: "success",   confirmButtonText: "Ok", html:true});
+			}
+			$scope.load = false;
+			console.log(data);
+		});
 	}
 	$scope.consultarNombre = function(){
+		console.log('ENTRO.. ');
 		$scope.load = true;
 		$http.get("../rest/registrarUsuario/"+$scope.email)
 		.then(function(data){
-			console.log(data);
+			encontro = true;
 			$scope.nombre = data.data.name;
 			$('[href=#step2]').tab('show');
 			$scope.load = false;
 		});
 	}
-});
-
-modulo.controller('validate', function($scope,$http,$location){
-	var valueParam = $location.url().split('?')[1];
-	console.log(valueParam);
-	$http.get('../rest/registrarUsuario/validar/'+valueParam).then(function(data){
-		var indice = data.data.indice;
-		if(indice == 1){
-			$scope.include = '../templates/registerDocument.html';
-		}
-	})
 });
 
 function moveTo(to){

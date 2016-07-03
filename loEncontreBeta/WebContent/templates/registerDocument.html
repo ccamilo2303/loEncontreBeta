@@ -14,8 +14,74 @@
 	</div>
 	<!-- /.container -->
 </nav>
-<div class="container col-sm-5 col-centered" id="myWizard"
-	style="margin-top: 50px;">
+
+<div class="container col-sm-7 col-centered"  style="margin-top: 70px;" ng-show="renderLoad" >
+<center>
+<img src="../img/loading.gif" style="width: 70;">
+<br>
+<h3>Cargando..</h3>
+</center>
+</div>
+
+<div class="container col-sm-7 col-centered"  style="margin-top: 50px;" ng-show="render == 1">
+
+<form class="form-horizontal">
+				<fieldset>
+					<div class="well bs-component">
+<h3>Este codigo QR es invalido</h3>
+<a href="#/">Regresar al inicio</a>
+o <br/>
+Dejanos un comentario.
+						<div class="form-group">
+							<label for="Nombre" class="col-md-2 control-label">Nombre:</label>
+							<div class="col-md-10">
+								<input type="text" class="form-control" id="inputNombre" ng-model="nombreContacto"
+									placeholder="tu nombre">
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="inputEmail" class="col-md-2 control-label">Email:</label>
+							<div class="col-md-10">
+								<input type="email" class="form-control" id="inputEmail" ng-model="emailContacto"
+									placeholder="tu email">
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="textArea" class="col-md-2 control-label">Mensaje:</label>
+							<div class="col-md-10">
+								<textarea class="form-control" rows="3" id="textArea" ng-model="mensajeContacto"
+									placeholder="escribe aqui el mensaje que nos quieres dejar"></textarea>
+							</div>
+						</div>
+						<div class="form-group">
+						<div class="col-md-10 col-md-offset-2">
+						<button class="btn btn-raised btn-primary"
+								ng-click="enviarMensajeContacto()">
+								<span
+									class="glyphicon glyphicon-refresh glyphicon-refresh-animate"
+									ng-show="load"></span> Enviar
+							</button>
+						</div>
+						</div>
+					</div>
+				</fieldset>
+			</form>
+
+</div>
+
+
+
+<div class="container col-sm-5 col-centered"  style="margin-top: 50px;" ng-show="render == 2">
+<div class="well form-group">
+<h3>Este codigo QR ya está registrado</h3>
+</div>
+
+<hr>
+</div>
+
+<div class="container col-sm-5 col-centered" id="myWizard" style="margin-top: 50px;" ng-show="render == 3">
 
 	<h3>Registrar Documento</h3>
 
@@ -84,13 +150,15 @@
 
 		<div class="tab-pane fade" id="step4">
 			<div class="well">
-				<h1>Correcto!</h1>
+				<h1>Para finalizar!</h1>
 				<h4 style="text-align: justify;">Recuerda que para cambiar el
 					estado de tu documento, buscalo por el correo Electr&oacute;nico
 					que nos proporcionaste "{{email}}"</h4>
 			</div>
 			<a class="btn btn-raised btn-primary prev" href="#">Atr&aacute;s</a>
-			<button class="btn btn-raised btn-success" ng-click="guardar();">Guardar</button>
+			<button class="btn btn-raised btn-success" ng-click="guardar();">
+			<span class="glyphicon glyphicon-refresh glyphicon-refresh-animate" ng-show="load"></span>
+			Guardar</button>
 		</div>
 	</div>
 
@@ -136,9 +204,6 @@ $('.prev').click(function(){
 	margin: 0 auto;
 }
 
-body {
-	overflow: hidden;
-}
 /*
     Original version: http://www.bootply.com/128062
     

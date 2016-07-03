@@ -26,7 +26,7 @@ public class RegisteredUserREST {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/validar/{token}")
 	public String validateQR(@PathParam("token") String token){
-		int retorno = createUser.createUserAndVerifyDocument(token);
+		int retorno = createUser.verifyDocument(token);
 		return "{\"indice\": "+retorno+" }";	
 	}
 	
@@ -34,7 +34,22 @@ public class RegisteredUserREST {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/{email}")
 	public String findNameByEmail(@PathParam("email") String email){
-		return "{\"name\": \" "+createUser.findNameByEmail(email)+"\" }";
+		return "{\"name\": \" "+createUser.findNameByEmail(email.toLowerCase())+"\" }";
 	}
+	
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/{token}/{email}/{nombre}/{descripcion}")
+	public String createUser(@PathParam("token") String token,@PathParam("email") String email,@PathParam("nombre") String nombre,@PathParam("descripcion") String descripcion){
+		int retorno = createUser.registerDocument(token, nombre, email, descripcion);
+		
+		if(retorno == 2 ){
+			return "{\"msg\": true, \"mensaje\":\"Este codigo QR yá está registrado\"}";
+		}else if(retorno == 1){
+			return "{\"msg\": true, \"mensaje\":\"Este codigo QR es invalido\"}";
+		}
+		return "{\"msg\": false}";
+	}
+	
 	
 }

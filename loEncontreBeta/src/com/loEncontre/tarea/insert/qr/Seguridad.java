@@ -25,7 +25,7 @@ public class Seguridad {
 	 * Crea la Llave para encriptar/desencriptar
 	 * @param String value
 	 */
-	public void addKey( String value ){
+	public Seguridad( String value ){
 		byte[] valuebytes = value.getBytes();            
 		key = new SecretKeySpec( Arrays.copyOf( valuebytes, keysize ) , algoritmo );      
 	}
@@ -87,25 +87,13 @@ public class Seguridad {
 	}
 	public static void main(String[] args) {
 
-		Seguridad sec = new Seguridad();
+		Seguridad sec = new Seguridad("loEncontre");
 
-		sec.addKey("Bolivia");
-		System.out.println( "Hola Mundo" );
 
-		System.out.println( " ------------ Encriptado ------------ " );
-		String texto = sec.encriptar("1");
+		String texto = sec.encriptar("hola123");
 		System.out.println( texto );
-
-		System.out.println( " ------------ Desencriptado ------------ " );
+		
 		System.out.println( sec.desencriptar( texto ) );
-
-
-		System.out.println( " ------------ Encriptado ------------ " );
-		String text1 = sec.encriptar("99999");
-		System.out.println( text1 );
-
-		System.out.println( " ------------ Desencriptado ------------ " );
-		System.out.println( sec.desencriptar( text1 ) );
 	}
 
 
