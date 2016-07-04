@@ -26,7 +26,7 @@ public class CrunchifyQRCode {
 	// Tutorial: http://zxing.github.io/zxing/apidocs/index.html
  
 	public static void main(String[] args) {
-		String myCodeText = "www.apploencontre.com";
+		String myCodeText = "http://loencontre-crick.rhcloud.com/f/i.html#/register?EXJ9R4vQAF67ah4GpRakgQ==67";
 		String filePath = "D:/CrunchifyQR.png";
 		int size = 100;
 		String fileType = "png";

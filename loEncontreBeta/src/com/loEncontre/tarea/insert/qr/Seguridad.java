@@ -90,10 +90,10 @@ public class Seguridad {
 		Seguridad sec = new Seguridad("loEncontre");
 
 
-		String texto = sec.encriptar("hola123");
+		String texto = sec.encriptar("1");
 		System.out.println( texto );
 		
-		System.out.println( sec.desencriptar( texto ) );
+		System.out.println( sec.desencriptar( "EXJ9R4vQAF67ah4GpRakgQ==" ) );
 	}
 
 

@@ -11,7 +11,6 @@ import org.bson.Document;
 import com.loEncontre.config.MongoSingletonConnection;
 import com.loEncontre.controlador.jwt.ControllerJWT;
 import com.loEncontre.tarea.insert.qr.Seguridad;
-import com.mongodb.BasicDBObject;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
@@ -88,7 +87,7 @@ public class CreateUserWithDocumentDAO {
 	private boolean verifyNotRegistered(String token){
 		MongoDatabase db = con.getDataBase();
 		MongoCollection<Document> coll = db.getCollection("registeredDocuments");
-		for(Document documento :  coll.find(new Document("token",token))){
+		for(Document documento :  coll.find(new Document("tokens",token))){
 			return true;
 		}
 		return false;
@@ -114,6 +113,7 @@ public class CreateUserWithDocumentDAO {
 		return false;
 	}
 
+	@SuppressWarnings("unchecked")
 	public int registerDocument(String token, String nombrePropietario, String email, String descripcion){
 		int validacion = verifyDocument(token);
 		System.out.println("=> ENTRO A REGISTRAR DOCUMENTO "+validacion+" --- "+new Seguridad("loEncontre").desencriptar(token));
@@ -129,16 +129,21 @@ public class CreateUserWithDocumentDAO {
 			Document persona = cursor.first();
 			Object id = persona.getObjectId("_id");
 			System.out.println(id+" ----- ");
+			
+			
 			List<Document> documentos = (List<Document>) persona.get("documents");
 			documentos.add(new Document().append("description", descripcion).append("lostDocument", false));
 
+			List<String> tokens = (List<String>) persona.get("tokens");
+			tokens.add(token);
+			
 			System.out.println(persona);
 			
 			coll.updateOne(new Document("_id",id), new Document("$set",persona));
 		}else{
 			System.out.println("=> ENTRO A CREAR");
 			Document persona = new Document();
-			persona.append("token", token);
+			persona.append("tokens", new ArrayList<String>().add(token));
 			persona.append("name", nombrePropietario);
 			persona.append("email", email);
 			List<Document> documentos = new ArrayList<Document>();
